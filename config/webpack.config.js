@@ -4,7 +4,7 @@ const prodConfig = require('./webpack.config.prod');
 const config = {
     entry: './index.js',
     output: {
-        path: resolve(__dirname, '/dist'),
+        path: resolve(__dirname, '../dist'),
         filename: '[name].[hash].js'
     }
 }
