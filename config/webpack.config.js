@@ -1,22 +1,38 @@
-const { resolve } = require('path');
+const { resolve, join } = require('path');
 const devConfig = require('./webpack.config.dev');
 const prodConfig = require('./webpack.config.prod');
-const config = {
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const rootDir = resolve(__dirname, '..');
+
+const baseConfig = {
     entry: './index.js',
     output: {
-        path: resolve(__dirname, '../dist'),
-        filename: '[name].[hash].js'
+        path: join(rootDir, 'dist'),
+        filename: 'index.js',
+        library: 'ReactPluginDemo',
+        libraryTarget: 'umd'
+    },
+    plugins: [
+        new CleanWebpackPlugin(['dist'], {
+            root: rootDir
+        }),
+    ],
+    resolve: {
+        alias: {
+            components: join(rootDir, 'src/components/')
+        }
     }
 }
 
 module.exports = (env, argv) => {
     if (argv.mode === 'development') {
-        return { ...config, ...devConfig }
+        return { ...baseConfig, ...devConfig }
     }
 
     if (argv.mode === 'production') {
-        return { ...config, ...prodConfig }
+        return { ...baseConfig, ...prodConfig }
     }
 
-    return config;
+    return baseConfig;
 };
