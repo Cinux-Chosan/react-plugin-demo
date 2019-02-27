@@ -1,3 +1,6 @@
+import { version, name } from './package';
+const gNamespace = window || global || {}
+const { reactPluginVersions = {} } = gNamespace;
+gNamespace.reactPluginVersions = { ...reactPluginVersions, [name]: version };
 
-
-var a = 1
+export { default as Demo } from '@components/demo';

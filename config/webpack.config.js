@@ -1,7 +1,15 @@
+/*
+ * @Author: Chosan.Zhangjianjun 
+ * @Date: 2019-02-27 14:21:02 
+ * @Last Modified by: Chosan.Zhangjianjun
+ * @Last Modified time: 2019-02-27 17:34:42
+ */
+
 const { resolve, join } = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const devConfig = require('./webpack.config.dev');
 const prodConfig = require('./webpack.config.prod');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpackMerge = require('webpack-merge');
 
 const rootDir = resolve(__dirname, '..');
 
@@ -10,8 +18,9 @@ const baseConfig = {
     output: {
         path: join(rootDir, 'dist'),
         filename: 'index.js',
+        // access this lib via window.ReactPluginDemo
         library: 'ReactPluginDemo',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
     },
     plugins: [
         new CleanWebpackPlugin(['dist'], {
@@ -20,19 +29,45 @@ const baseConfig = {
     ],
     resolve: {
         alias: {
-            components: join(rootDir, 'src/components/')
+            '@components': join(rootDir, 'src/components/'),
+            '@app': join(rootDir, 'test/app/')
         }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            ['@babel/preset-env', {
+                                "targets": {
+                                    // https://github.com/browserslist/browserslist
+                                    "browsers": ["ie >= 9"]
+                                },
+                                useBuiltIns: 'usage'
+                            }],
+                            '@babel/preset-react'
+                        ],
+                        plugins: []
+                    }
+                }
+            }
+        ]
     }
 }
 
 module.exports = (env, argv) => {
-    if (argv.mode === 'development') {
-        return { ...baseConfig, ...devConfig }
+    switch (argv.mode) {
+        case 'development': {
+            return webpackMerge.smart(baseConfig, devConfig);
+        }
+        case 'production': {
+            return webpackMerge.smart(baseConfig, prodConfig);
+        }
+        default:
+            return baseConfig;
     }
-
-    if (argv.mode === 'production') {
-        return { ...baseConfig, ...prodConfig }
-    }
-
-    return baseConfig;
 };
