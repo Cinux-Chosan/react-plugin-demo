@@ -56,7 +56,8 @@ const baseConfig = {
                 }
             }
         ]
-    }
+    },
+    externals: /(react|antd).*/
 }
 
 module.exports = (env, argv) => {
