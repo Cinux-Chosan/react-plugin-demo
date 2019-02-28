@@ -1,4 +1,4 @@
-
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve, join } = require('path');
 
@@ -14,9 +14,11 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: join(rootDir, 'dist'),
-        open: 'Chrome'
+        hot: true,
+        open: 'Chrome',
     },
     plugins: [
         new HtmlWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ]
 }

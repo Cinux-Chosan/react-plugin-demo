@@ -7,14 +7,15 @@
 
 const { resolve, join } = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpackMerge = require('webpack-merge');
 const devConfig = require('./webpack.config.dev');
 const prodConfig = require('./webpack.config.prod');
-const webpackMerge = require('webpack-merge');
 
 const rootDir = resolve(__dirname, '..');
 
 const baseConfig = {
     entry: './index.js',
+    target: 'web',
     output: {
         path: join(rootDir, 'dist'),
         filename: 'index.js',
@@ -43,21 +44,28 @@ const baseConfig = {
                     options: {
                         presets: [
                             ['@babel/preset-env', {
-                                "targets": {
+                                'targets': {
                                     // https://github.com/browserslist/browserslist
-                                    "browsers": ["ie >= 9"]
+                                    'browsers': ['ie >= 9']
                                 },
                                 useBuiltIns: 'usage'
                             }],
                             '@babel/preset-react'
                         ],
-                        plugins: []
+                        plugins: ['react-hot-loader/babel']
                     }
                 }
+            }, {
+                test: /\.(css|scss)$/,
+                exclude: /node_modules/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
-    externals: /(react|antd).*/
 }
 
 module.exports = (env, argv) => {
