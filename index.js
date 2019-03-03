@@ -8,3 +8,5 @@ gNamespace.reactPluginVersions = { ...reactPluginVersions, [name]: version };
 // 另外由于 package.json 中 module 字段指定为当前文件，
 // 因此在其它 webpack 项目中直接 import { Demo } from 'react-plugin-demo' 会进入到 module 字段指定的文件而非 main
 export { default as Demo } from './src/components/demo';
+
+import { square } from './test';

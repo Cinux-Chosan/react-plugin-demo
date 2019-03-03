@@ -15,7 +15,7 @@ module.exports = {
     devServer: {
         contentBase: join(rootDir, 'dist'),
         hot: true,
-        open: 'Chrome',
+        open: 'Google Chrome',
     },
     plugins: [
         new HtmlWebpackPlugin(),
