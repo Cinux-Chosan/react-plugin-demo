@@ -1,4 +1,4 @@
-import { version, name } from './package';
+import { version, name } from '../package';
 const gNamespace = window || global || {}
 const { reactPluginVersions = {} } = gNamespace;
 gNamespace.reactPluginVersions = { ...reactPluginVersions, [name]: version };
@@ -7,6 +7,4 @@ gNamespace.reactPluginVersions = { ...reactPluginVersions, [name]: version };
 // 因为在未通过 webpack 打包的情况下被第三方引用（如：import { Demo } from 'react-plugin-demo/index'）会找不到 @components
 // 另外由于 package.json 中 module 字段指定为当前文件，
 // 因此在其它 webpack 项目中直接 import { Demo } from 'react-plugin-demo' 会进入到 module 字段指定的文件而非 main
-export { default as Demo } from './src/components/demo';
-
-import { square } from './test';
+export { default as Demo } from '../src/components/demo';
