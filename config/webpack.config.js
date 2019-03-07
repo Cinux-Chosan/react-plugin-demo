@@ -14,7 +14,7 @@ const prodConfig = require("./webpack.config.prod");
 const rootDir = resolve(__dirname, "..");
 
 const baseConfig = {
-  entry: "./index.js",
+  entry: "./es/index.js",
   target: "web",
   // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
   devtool: "source-map",
