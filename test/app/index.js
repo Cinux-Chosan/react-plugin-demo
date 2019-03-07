@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader/root'
 import './index.scss';
 import Demo from '@components/demo';
 
-// React-hot-loader 会多次执行该文件
+// 避免 React-hot-loader 多次执行该文件导致插入多个 root
 let rootEl = document.getElementById('root');
 if (!rootEl) {
     rootEl = document.createElement('div');
