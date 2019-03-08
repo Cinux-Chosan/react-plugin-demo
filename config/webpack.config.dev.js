@@ -7,13 +7,16 @@ const appDir = join(rootDir, 'test/app/');
 
 module.exports = {
     mode: 'development',
-    entry: join(appDir, 'index.js'),
+    entry: ['@babel/polyfill', join(appDir, 'index.js')],
     output: {
-        filename: '[name].[hash].js'
+        filename: '[name].[hash].js',
     },
     devtool: 'inline-source-map',
     devServer: {
         contentBase: join(rootDir, 'dist'),
+        // publicPath: '/assets/',
+        // openPage: 'assets/',
+        // writeToDisk: true,
         hot: true,
         open: true, // or set MacOS 'Google Chrome', Windows 'Chrome'
     },
