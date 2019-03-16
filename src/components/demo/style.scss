@@ -1,0 +1,46 @@
+$left: -1.5em;
+
+.menuItem{
+    padding-right: 34px !important;
+}
+
+.toolBox{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.searchBox{
+    input {
+        border-radius: 20px;
+    }
+}
+
+.treeNodeStatus{
+    position: relative;
+    left: $left;
+    top: 0;
+    &.online{
+        color: green;
+    }
+
+    &.offline{
+        color: red;
+    }
+
+    &.breakdown{
+        color: orange;
+    }
+}
+
+.treeNodeName{
+    position: relative;
+    left: $left;
+}
+
+:global {
+    .ant-menu-item{
+        // overflow: visible !important; 
+    }
+}
+

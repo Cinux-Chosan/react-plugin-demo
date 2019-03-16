@@ -60,14 +60,33 @@ const baseConfig = {
               ],
               "@babel/preset-react"
             ],
-            plugins: ["react-hot-loader/babel"]
+            plugins: ["react-hot-loader/babel",
+              [
+                'import', {
+                  libraryName: 'antd',
+                  libraryDirectory: 'es',
+                  style: 'css',
+                }],
+              "@babel/plugin-proposal-class-properties"]
           }
         }
       },
       {
         test: /\.(css|scss)$/,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ["style-loader", {
+          loader: "css-loader",
+          options: {
+            modules: true
+          }
+        }, "sass-loader"]
+      },
+      {
+        test: /\.(css|scss)$/,
+        include: /node_modules/,
+        use: ["style-loader", {
+          loader: "css-loader",
+        }, "sass-loader"]
       },
       {
         test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
