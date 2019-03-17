@@ -8,10 +8,14 @@
 const { resolve, join } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpackMerge = require("webpack-merge");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const devConfig = require("./webpack.config.dev");
 const prodConfig = require("./webpack.config.prod");
 
 const rootDir = resolve(__dirname, "..");
+
+const browsers = "ie >= 9";
 
 const baseConfig = {
   entry: "./es/index.js",
@@ -28,7 +32,8 @@ const baseConfig = {
   plugins: [
     new CleanWebpackPlugin(["dist"], {
       root: rootDir
-    })
+    }),
+    new MiniCssExtractPlugin()
   ],
   resolve: {
     alias: {
@@ -53,7 +58,7 @@ const baseConfig = {
                 {
                   targets: {
                     // https://github.com/browserslist/browserslist
-                    browsers: ["ie >= 9"]
+                    browsers
                   },
                   useBuiltIns: "usage"
                 }
@@ -74,19 +79,39 @@ const baseConfig = {
       {
         test: /\.(css|scss)$/,
         exclude: /node_modules/,
-        use: ["style-loader", {
-          loader: "css-loader",
-          options: {
-            modules: true
-          }
-        }, "sass-loader"]
+        use: [
+          MiniCssExtractPlugin.loader, // "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              ident: 'postcss',
+              plugins: (loader) => [
+                require('postcss-import')({ root: loader.resourcePath }),
+                require('postcss-preset-env')({
+                  browsers
+                }
+                ),
+                require('cssnano')()
+              ]
+            }
+          },
+          "sass-loader"]
       },
       {
         test: /\.(css|scss)$/,
         include: /node_modules/,
-        use: ["style-loader", {
-          loader: "css-loader",
-        }, "sass-loader"]
+        use: [
+          MiniCssExtractPlugin.loader,// "style-loader", 
+          {
+            loader: "css-loader",
+          }, "sass-loader"]
       },
       {
         test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,

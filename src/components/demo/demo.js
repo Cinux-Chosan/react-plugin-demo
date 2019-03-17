@@ -1,19 +1,20 @@
 import React from 'react';
+import { Icon } from 'antd';
 import Comp from '.';
 
 const btn = (props) => {
     if (props.node.a) {
-        return <a onClick={e => {
+        return <Icon type="loading" onClick={e => {
             props.node.a = 0
             props.forceUpdate();
         }
-        }>aaaaa</a>
-
+        } />
     } else {
-        return <a onClick={e => {
+        return <Icon type="twitter" onClick={e => {
             props.node.a = 1
             props.forceUpdate();
-        }}>bbbb</a>
+        }
+        } />
     }
 }
 

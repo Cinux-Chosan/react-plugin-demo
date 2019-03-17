@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve, join } = require('path');
+const package = require('../package');
 
 const rootDir = resolve(__dirname, '..');
 const appDir = join(rootDir, 'test/app/');
@@ -21,7 +22,10 @@ module.exports = {
         open: true, // or set MacOS 'Google Chrome', Windows 'Chrome'
     },
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: join(appDir, 'index.html'),
+            title: package.name
+        }),
         new webpack.HotModuleReplacementPlugin()
     ]
 }
