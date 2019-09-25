@@ -37,8 +37,12 @@ const baseConfig = {
   ],
   resolve: {
     alias: {
+      "@src": join(rootDir, 'src/'),
       "@components": join(rootDir, "src/components/"),
-      "@app": join(rootDir, "test/app/")
+      "@app": join(rootDir, "test/app/"),
+      "@pages": join(rootDir, 'test/app/pages'),
+      "@testComponents": join(rootDir, 'test/app/components'),
+      'react-hot-loader': resolve(join(rootDir, './node_modules/react-hot-loader'))
     }
   },
   optimization: {
@@ -77,7 +81,7 @@ const baseConfig = {
         }
       },
       {
-        test: /\.(css|scss)$/,
+        test: /\.(css|less)$/,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader, // "style-loader",
@@ -102,16 +106,16 @@ const baseConfig = {
               ]
             }
           },
-          "sass-loader"]
+          "less-loader"]
       },
       {
-        test: /\.(css|scss)$/,
+        test: /\.(css|less)$/,
         include: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,// "style-loader", 
           {
             loader: "css-loader",
-          }, "sass-loader"]
+          }, "less-loader"]
       },
       {
         test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,

@@ -1,4 +1,4 @@
-$left: -3.5em;
+@left: -3.5em;
 
 .menuItem{
     padding-right: 34px !important;
@@ -18,7 +18,7 @@ $left: -3.5em;
 
 .treeNodeStatus{
     position: relative;
-    text-indent: $left;
+    text-indent: @left;
     top: 0;
     
     &.online{
@@ -37,7 +37,7 @@ $left: -3.5em;
 .treeNodeName{
     position: relative;
     display: inline-block;
-    text-indent: $left + 2em;
+    text-indent: @left + 2em;
 }
 
 :global {

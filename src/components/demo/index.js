@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Icon, Input } from 'antd';
 import data from './response';
-import styles from "./style.scss";
+import styles from "./style.less";
 
 const SubMenu = Menu.SubMenu;
 const Search = Input.Search;
